@@ -1,4 +1,4 @@
-﻿var ApiMessages = function () { };
+var ApiMessages = function () { };
 ApiMessages.EMAIL_NOT_FOUND = 1;
 ApiMessages.INVALID_PWD = 2;
 ApiMessages.DB_ERROR = 3;
@@ -11,5 +11,9 @@ ApiMessages.PASSWORD_RESET_EMAIL_MISMATCH = 9;
 ApiMessages.COULD_NOT_RESET_PASSWORD = 10;
 ApiMessages.PASSWORD_CONFIRM_MISMATCH = 11;
 ApiMessages.COULD_NOT_CREATE_SESSION = 12;
+
+ApiMessages.COULD_NOT_CREATE_BOOKING = 13;
+ApiMessages.BOOKING_ALREADY_EXISTS = 14;
+
 
 module.exports = ApiMessages;

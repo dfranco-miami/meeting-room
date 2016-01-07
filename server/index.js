@@ -3,8 +3,8 @@ var express = require('express'),
     cookieParser = require('cookie-parser'),
     mongoose = require('mongoose'),
     expressSession = require('express-session'),
-    mongooseSession = require('mongoose-session'),  // https://github.com/chncdcksn/mongoose-session
-    //MongoStore = require('connect-mongo')(expressSession),
+    //mongooseSession = require('mongoose-session'),  // https://github.com/chncdcksn/mongoose-session
+    MongoStore = require('connect-mongo')(expressSession),
     accountRoutes = require('./routes/account'),
     bookingRoutes = require('./routes/bookings'),
     app = express(),
@@ -19,7 +19,7 @@ mongoose.connect(connectionString);
 app.use(expressSession({
         key: 'session',
         secret: '128013A7-5B9F-4CC0-BD9E-4480B2D3EFE9',
-        store: new mongooseSession(mongoose),
+        store: new MongoStore({ mongooseConnection: mongoose.connection }),
         resave: true,
         saveUninitialized: true
     })
