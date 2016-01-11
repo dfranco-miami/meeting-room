@@ -5,11 +5,13 @@ var express = require('express'),
     expressSession = require('express-session'),
     //mongooseSession = require('mongoose-session'),  // https://github.com/chncdcksn/mongoose-session
     MongoStore = require('connect-mongo')(expressSession),
+    
     accountRoutes = require('./routes/account'),
     bookingRoutes = require('./routes/bookings'),
+    
     app = express(),
+    
     port = 30000;
-
 
 var dbName = 'bookitDB';
 var connectionString = 'mongodb://localhost:27017/' + dbName;
@@ -27,6 +29,12 @@ app.use(expressSession({
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
+app.use(function(req, res, next) {
+    res.header("Access-Control-Allow-Origin", "*");
+    res.header("Access-Control-Allow-Methods","GET, PUT, POST, DELETE");
+    res.header("Access-Control-Allow-Headers", "Content-Type");
+    next();
+});
 app.use('/api',  [accountRoutes, bookingRoutes]);
 
 var server = app.listen(port, function () {

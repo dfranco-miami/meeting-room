@@ -1,4 +1,4 @@
-﻿var express = require('express'),
+var express = require('express'),
     router = express.Router(),
     AccountController = require('../controllers/account.js'),
     UserRegistration = require('../models/user-registration.js'),
@@ -29,7 +29,7 @@ router.route('/account/register')
 
         var apiResponseStep1 = accountController.getUserFromUserRegistration(userRegistration);
 
-        res.set("Access-Control-Allow-Origin", "http://localhost:42550");   // Enable CORS in dev environment.
+        //res.set("Access-Control-Allow-Origin", "http://localhost:42550");   // Enable CORS in dev environment.
 
         if (apiResponseStep1.success) {
             accountController.register(apiResponseStep1.extras.user, function (err, apiResponseStep2) {
@@ -50,7 +50,7 @@ router.route('/account/logon')
 
         var userLogon = new UserLogon(req.body);
 
-        res.set("Access-Control-Allow-Origin", "http://localhost:42550");   // Enable CORS in dev environment.
+        //res.set("Access-Control-Allow-Origin", "http://localhost:42550");   // Enable CORS in dev environment.
 
         accountController.logon(userLogon.email, userLogon.password, function (err, response) {
             

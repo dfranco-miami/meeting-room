@@ -59,9 +59,7 @@ BookingsController.prototype.addBooking = function (newBooking, callback) {
 
                 if (numberAffected === 1) {
 
-                    return callback(err, new me.ApiResponse({
-                        success: true, extras: {}
-                    }));
+                    return callback(err, new me.ApiResponse({ success: true, extras: null }));
                 } else {
                     return callback(err, new me.ApiResponse({ success: false, extras: { msg: me.ApiMessages.COULD_NOT_CREATE_BOOKING } }));
                 }
