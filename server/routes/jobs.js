@@ -23,7 +23,7 @@ router.route('/jobs/')
                     session.userId,
                     ((req.query.page) ? parseInt(req.query.page) : 1),
                     ((req.query.pageSize) ? parseInt(req.query.pageSize) : 15),
-                    ((req.query.sortColumn) ? req.query.sortColumn : 'dueDate'),
+                    ((req.query.sortColumn) ? req.query.sortColumn : 'dateTimeDue'),
                     ((req.query.sortDir=='asc'||req.query.sortDir=='desc') ? req.query.sortDir : 'asc'),
                     function (err, apiResponse) {
 
@@ -51,6 +51,7 @@ router.route('/jobs/add')
 
             if (session) {
                 var newJob = new Job({
+                    jobId: req.body.jobId,
                     ownerUserId: session.userId,
                     clientName: req.body.clientName,
                     service: req.body.service,

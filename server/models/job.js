@@ -4,6 +4,7 @@ var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
 
 var JobSchema = new Schema({
+    jobId: String,
     ownerUserId: String,
     clientName: String,
     service: String,

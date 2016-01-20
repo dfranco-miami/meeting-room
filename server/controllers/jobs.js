@@ -35,12 +35,17 @@ JobsController.prototype.getJobs = function (userId, page, pageSize, sortColumn,
 
 JobsController.prototype.addJob = function (newJob, callback) {
     var me = this;
-/*
-    var query = {
-        locationId: newJob.locationId,
-        fromDate: { '$gte': newJob.dateTimeFrom },
-        toDate: { '$lt': newJob.dateTimeTo }
-    };
+    
+    if (newJob.jobId) {
+        me.jobModel.findByIdAndRemove(newJob.jobId, function(err) {
+            if (err) throw err;
+            //console.log(' deleted!');
+        });
+    }
+        /*
+        var query = {
+            _id: newJob.jobId
+        };
     
     me.jobModel.findOne(query, function (err, job) {
         if (err) {
@@ -50,8 +55,10 @@ JobsController.prototype.addJob = function (newJob, callback) {
         if (job) {
             return callback(err, new me.ApiResponse({ success: false, extras: { msg: me.ApiMessages.BOOKING_ALREADY_EXISTS } }));
         } else {
-
-   */
+        
+    }
+    */
+    
     newJob.save(function (err, job, numberAffected) {
                 
         if (err) {
