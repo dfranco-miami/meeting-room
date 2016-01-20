@@ -21,8 +21,8 @@ BookingsController.prototype.getBookings = function (userId, fromDate, toDate, p
     
     me.bookingModel.find(query)
         .sort(sortOption)
-        //.skip(pageSize * page)
-        //.limit(pageSize)
+        .skip(pageSize * (--page)) //???
+        .limit(pageSize)
         .exec(function (err, bookings) {
             if (err) {
                 return callback(err, new me.ApiResponse({ success: false, extras: { msg: me.ApiMessages.DB_ERROR } }));
@@ -35,14 +35,13 @@ BookingsController.prototype.getBookings = function (userId, fromDate, toDate, p
 
 BookingsController.prototype.addBooking = function (newBooking, callback) {
     
-    var me = this;   
 
     var query = {
         locationId: newBooking.locationId,
         fromDate: { '$gte': newBooking.dateTimeFrom },
         toDate: { '$lt': newBooking.dateTimeTo }
     };
-
+    
     me.bookingModel.findOne(query, function (err, booking) {
         if (err) {
             return callback(err, new me.ApiResponse({ success: false, extras: { msg: me.ApiMessages.DB_ERROR } }));
@@ -53,6 +52,7 @@ BookingsController.prototype.addBooking = function (newBooking, callback) {
         } else {
 
             newBooking.save(function (err, booking, numberAffected) {
+                
                 if (err) {
                     return callback(err, new me.ApiResponse({ success: false, extras: { msg: me.ApiMessages.DB_ERROR } }));
                 }

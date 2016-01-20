@@ -7,13 +7,14 @@ var express = require('express'),
     MongoStore = require('connect-mongo')(expressSession),
     
     accountRoutes = require('./routes/account'),
+    jobRoutes = require('./routes/jobs'),
     bookingRoutes = require('./routes/bookings'),
     
     app = express(),
     
     port = 30000;
 
-var dbName = 'bookitDB';
+var dbName = 'readyappDB';
 var connectionString = 'mongodb://localhost:27017/' + dbName;
 
 mongoose.connect(connectionString);
@@ -32,10 +33,11 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(function(req, res, next) {
     res.header("Access-Control-Allow-Origin", "*");
     res.header("Access-Control-Allow-Methods","GET, PUT, POST, DELETE");
-    res.header("Access-Control-Allow-Headers", "Content-Type");
+    
+    res.header("Access-Control-Allow-Headers", "X-Auth-Token, Content-Type");
     next();
 });
-app.use('/api',  [accountRoutes, bookingRoutes]);
+app.use('/api',  [accountRoutes, jobRoutes, bookingRoutes]);
 
 var server = app.listen(port, function () {
     console.log('Express server listening on port ' + server.address().port);

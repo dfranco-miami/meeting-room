@@ -14,6 +14,8 @@ ApiMessages.COULD_NOT_CREATE_SESSION = 12;
 
 ApiMessages.COULD_NOT_CREATE_BOOKING = 13;
 ApiMessages.BOOKING_ALREADY_EXISTS = 14;
+ApiMessages.COULD_NOT_CREATE_JOB = 15;
+
 
 
 module.exports = ApiMessages;

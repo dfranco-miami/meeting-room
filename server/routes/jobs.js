@@ -1,15 +1,15 @@
 var express = require('express'),
     router = express.Router(),
-    BookingsController = require('../controllers/bookings.js'),
-    Booking = require('../models/booking.js'),
+    JobsController = require('../controllers/jobs.js'),
+    Job = require('../models/job.js'),
     UserSession = require('../models/user-session.js'),
     ApiResponse = require('../models/api-response.js');
     ApiMessages = require('../models/api-messages.js');
 
-router.route('/bookings/')
+router.route('/jobs/')
     .get(function (req, res) {
 
-        var bookingsController = new BookingsController(Booking);
+        var jobsController = new JobsController(Job);
 
         UserSession.findOne({ sessionId: req.get('X-Auth-Token') }, function (err, session) {
 
@@ -19,13 +19,11 @@ router.route('/bookings/')
             
             if (session) {
 
-                bookingsController.getBookings(
+                jobsController.getJobs(
                     session.userId,
-                    req.query.fromDate,
-                    req.query.toDate,
                     ((req.query.page) ? parseInt(req.query.page) : 1),
                     ((req.query.pageSize) ? parseInt(req.query.pageSize) : 15),
-                    ((req.query.sortColumn) ? req.query.sortColumn : 'fromDate'),
+                    ((req.query.sortColumn) ? req.query.sortColumn : 'dueDate'),
                     ((req.query.sortDir=='asc'||req.query.sortDir=='desc') ? req.query.sortDir : 'asc'),
                     function (err, apiResponse) {
 
@@ -39,11 +37,11 @@ router.route('/bookings/')
 
     });
 
-router.route('/bookings/add')
+router.route('/jobs/add')
     
     .post(function (req, res) {
 
-        var bookingsController = new BookingsController(Booking);
+        var jobsController = new JobsController(Job);
 
     
         UserSession.findOne({ sessionId: req.get('X-Auth-Token') }, function (err, session) {
@@ -52,16 +50,18 @@ router.route('/bookings/add')
             }
 
             if (session) {
-                var newBooking = new Booking({
+                var newJob = new Job({
                     ownerUserId: session.userId,
-                    locationId: req.body.locationId,
-                    dateTimeFrom: new Date(req.body.dateTimeFrom),
-                    dateTimeTo: new Date(req.body.dateTimeTo),
-                    numberOfAttendees: parseInt(req.body.numberOfAttendees)
+                    clientName: req.body.clientName,
+                    service: req.body.service,
+                    dateTimeDue: new Date(req.body.dateTimeDue),
+                    hours: parseInt(req.body.hours),
+                    phone: req.body.phone,
+                    email: req.body.email
                 });
                 
-                bookingsController.addBooking(
-                    newBooking,
+                jobsController.addJob(
+                    newJob,
                     function (err, apiResponse) {
 
                         return res.send(apiResponse);
