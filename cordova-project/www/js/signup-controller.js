@@ -1,4 +1,4 @@
-﻿var BookIt = BookIt || {};
+var BookIt = BookIt || {};
 
 BookIt.SignUpController = function () {
 
@@ -58,7 +58,7 @@ BookIt.SignUpController.prototype.resetSignUpForm = function () {
 
 };
 
-BookIt.SignUpController.prototype.onSignupCommand = function () {
+BookIt.SignUpController.prototype.onSignUpCommand = function () {
 
     var me = this,
         firstName = me.$txtFirstName.val().trim(),
